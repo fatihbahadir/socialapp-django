@@ -1,0 +1,74 @@
+{% extends 'users/base.html' %}
+{% load static %}
+{% load mathfilters %}
+{% block body %}
+<div class="mt-20 container flex flex-col items-center justify-center mx-auto z-[4]">
+        <div class="flex justify-center mt-5 p-10">
+            <h2 class="text-3xl font-normal mb-2 text-gray-500">Posts</h2>
+        </div>
+        <div class="grid p-10 grid-cols-1">
+            {% for post in posts %}
+            <a href="">
+                <div class="rounded overflow-hidden bg-white shadow-lg mt-12" style="width: 500px;">
+                    <div class="user-container flex mx-5 my-5 gap-3 items-center ">
+                        <img class="h-10 w-10 rounded-full" src="{{ post.user.profile.photo.url }}" alt="">
+                        <div class="font-bold text-indigo-500">
+                            {{ post.user }}
+                        </div>
+                    </div>
+                    <div class="w-full" style="height: 300px;">
+                        <img class="w-full h-full object-cover" src="{{post.image.url}}" alt="">
+                    </div>
+                    <div class="mx-5 my-5">
+                        <div class="icon-container flex">
+                            <a id="{{post.id}}" class="btn-like mr-3">
+                                {% if logged_user in post.liked_by.all %}
+                                <img class="w-6 h-6" src="{% static 'users/images/redlike.png' %}" alt="">
+                                {% else %}
+                                <img class="w-6 h-6" src="{% static 'users/images/like.png' %}" alt="">
+                                {% endif %} 
+                            </a>
+                            <a href="" class="mr-3">
+                                <img class="w-6 h-6" src="{% static 'users/images/comment.png' %}" alt="">
+
+                            </a>
+                            <img class="w-6 h-6" src="{% static 'users/images/share.png' %}" alt="">
+
+                        </div>
+                    </div>
+                    <div class="mx-5 my-5 text-sm">
+                        {% if post.liked_by.count < 1 %}
+
+                        {% elif post.liked_by.count == 1 %}
+                            {{ post.liked_by.first }} liked this post
+                        {% elif post.liked_by.count > 1 %}
+                            {{ post.liked_by.first }} and {{ post.liked_by.count|sub:1 }} others liked this post
+                        {% endif %}
+                    </div>
+                    <div class="mx-5 my-5">
+                        <div class="font-bold text-xl mb-2">{{ post.title }}</div>
+                        <div class="text-gray-700">{{ post.caption }}</div>
+                    </div>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+</div>
+
+<script type="text/javascript">
+    $(document).on('click', '.btn-like', function(){
+        var post_id = this.id
+        window.CSRF_TOKEN = "{{ csrf_token }}"
+        $.ajax({
+            method: "POST",
+            url: '/posts/like',
+            data: {
+                post_id : post_id,
+                csrfmiddlewaretoken: window.CSRF_TOKEN
+            }
+        })
+        window.location.href = "http://127.0.0.1:8000/posts/feed"
+    })
+</script>
+
+{% endblock %}
