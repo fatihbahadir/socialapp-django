@@ -1,11 +1,41 @@
 {% extends 'users/base.html' %}
 
 {% block body %}
-<h2>Edit Profile Form</h2>
+<div class="w-full h-screen flex items-center justify-center">
+    <div class="shadow-xl rounded p-12">
+<h2 class="text-3xl mb-5">Edit User Profile</h2>
 <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
-    {{ user_form.as_p }}
-    {{ profile_form.as_p }}
-    <input type="submit">
+    <div class="mb-2 ">
+        <label class="block text-grey-700 text-sm font-bold mb-2" for="">Firstname</label>
+        <div class="shadow rounded apperance-none border py-2 px-3 text-grey-800">
+            {{ user_form.first_name }}
+        </div>
+    </div>
+    <div class="mb-2 ">
+        <label class="block text-grey-700 text-sm font-bold mb-2" for="">Lastname</label>
+        <div class="shadow rounded apperance-none border py-2 px-3 text-grey-800">
+            {{ user_form.last_name }}
+        </div>
+    </div>
+    <div class="mb-2 ">
+        <label class="block text-grey-700 text-sm font-bold mb-2" for="">Email</label>
+        <div class="shadow rounded apperance-none border py-2 px-3 text-grey-800">
+            {{ user_form.email }}
+        </div>
+    </div>
+    <div class="mb-2 ">
+        <label class="block text-grey-700 text-sm font-bold mb-2" for="">Photo</label>
+        <div class="shadow rounded apperance-none border py-2 px-3 text-grey-800">
+            {{ profile_form.photo }}
+        </div>
+    </div>
+
+    <button type="submit" class="bg-green-500 text-white my-5 px-6 py-2 hover:bg-green-700 transition-all rounded">
+        Submit
+    </button>
 </form>
+</div>
+</div>
+
 {% endblock %}

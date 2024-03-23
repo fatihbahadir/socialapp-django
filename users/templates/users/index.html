@@ -1,9 +1,40 @@
 {% extends 'users/base.html' %}
+{% load static %}
 {% block body %}
-<h1>Homepage for users app</h1>
-{% for post in posts %}
-    <h1>{{ post.title }}</h1>
-    <h2>{{ post.user }}</h2>
-    <img src={{post.image.url}} alt="">
-{% endfor %}
+<div class="mt-20 container flex flex-col items-center justify-center mx-auto z-[4]">
+        <div class="flex justify-center mt-5 p-10">
+            <h2 class="text-3xl font-normal mb-2 text-gray-500">My Posts</h2>
+        </div>
+        <div class="grid p-10 grid-cols-1">
+            {% for post in posts %}
+            <a href="">
+                <div class="rounded overflow-hidden bg-white shadow-lg" style="width: 500px;">
+                    <div class="user-container flex mx-5 my-5 gap-3 items-center ">
+                        <img class="h-10 w-10 rounded-full" src="{{ profile.photo.url }}" alt="">
+                        <div class="font-bold text-indigo-500">
+                            {{ post.user }}
+                        </div>
+                    </div>
+                    <div class="w-full" style="height: 300px;">
+                        <img class="w-full h-full object-cover" src="{{post.image.url}}" alt="">
+                    </div>
+                    <div class="mx-5 my-5">
+                        <div class="icon-container flex gap-3">
+                            <img class="w-8 h-8" src="{% static 'users/images/like.png' %}" alt="">
+                            <img class="w-8 h-8" src="{% static 'users/images/comment.png' %}" alt="">
+                            <img class="w-8 h-8" src="{% static 'users/images/share.png' %}" alt="">
+
+                        </div>
+                    </div>
+                    <div class="mx-5 my-5">
+                        <div class="font-bold text-xl mb-2">{{ post.title }}</div>
+                        <div class="text-gray-700">{{ post.caption }}</div>
+                    </div>
+
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+</div>
+
 {% endblock %}

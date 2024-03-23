@@ -2,19 +2,36 @@
 <html>
     <head>
         <link rel="stylesheet" href="{% static 'users/styles.css' %}">
+        <link rel="stylesheet" href="{% static 'users/style.css' %}">
+
     </head>
     <body>
-        {% if request.user.is_authenticated %}
-        <form action="{% url 'logout' %}" method="post">
-            {% csrf_token %}
-            <button type="submit">Logout</button>
-        </form>
 
-        {% else %}
-            <a class="text-red-300" href="{% url 'login' %}">
-                Login
-            </a>
-        {% endif %}
+        <nav class="shadow-lg py-3 fixed w-full bg-white top-0 z-[5]">
+            <div class="flex justify-between items-center container mx-auto">
+                <div>
+                    <a class="flex items-center gap-3" href="">
+                        <img class="h-8 w-8" src="{% static 'users/images/social.png' %}" alt="">
+                        <span class="text-lg font-semibold text-gray-500">Photo App</span>
+                    </a>
+                </div>
+                <div class="flex items-center justify-center">
+                    {% if request.user.is_authenticated %}
+                   <form class="py-4 px-2 m-0 "  action="{% url 'logout' %}" method="post">
+                        {% csrf_token %}
+                        <button class="text-gray-500 font-semibold" type="submit">
+                            Logout
+                        </button>
+                    </form>
+                    {% else %}
+                    <a href="{% url 'login' %}" class="py-4 px-2 text-gray-500 font-semibold" href="">Login</a>
+                    {% endif %}
+                    <a class="py-4 px-2 text-gray-500 font-semibold" href="">Link 3</a>
+
+                </div>
+            </div>
+        </nav>
+    
 
         {% block body %}
 
