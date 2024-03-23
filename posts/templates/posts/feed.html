@@ -47,8 +47,28 @@
                     </div>
                     <div class="mx-5 my-5">
                         <div class="font-bold text-xl mb-2">{{ post.title }}</div>
-                        <div class="text-gray-700">{{ post.caption }}</div>
+                        <p class="text-gray-700">{{ post.caption }}</p>
                     </div>
+                    <div class="mx-5 my-5">
+                        {% for comment in post.comments.all %}
+                           <p> <b>{{ comment.posted_by }} </b> :{{ comment.body }}</p> 
+                        {% endfor %}
+                    </div>
+                    <div class="mx-5 my-5">
+                        <form method="post" >
+                            {% csrf_token %}
+                            <div class="relative border rounded py-1 pl-2 border-r-none w-full flex items-center justify-center">
+                                <input maxlength="100" class="pr-16" placeholder="Add Comment" type="text" name="{{comment_form.body.name}}" id="id_{{comment_form.body.name}}" required>
+                                <button class="absolute right-0 py-1 px-3  text-white bg-green-500 rounded"  type="submit">Add</button>
+                            </div>
+                            <div>
+                                <input type="hidden" name="post_id" id="post_id" value="{{ post.id }}">
+                                <input type="hidden" name="posted_by" id="posted_by" value="{{ logged_user }}">
+
+                            </div>
+
+                        </form>
+                    </div>  
                 </div>
             </a>
             {% endfor %}
